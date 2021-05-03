@@ -2,14 +2,18 @@ import json
 import requests
 import os
 from datetime import datetime, timedelta
+from environs import Env
+
+env = Env()
+env.read_env()
 
 API_ENDPOINT_URL = "https://cdn-api.co-vin.in/api"
 
 slot_endpoint = "/v2/appointment/sessions/public/calendarByPin"
-pincodes = ['400074', '410210', '400614', '400071', '400706']
-week_range = 2
-available_capacity = 0 # testing since zero vaccines thx modi
-slack_api_endpoint = ""
+pincodes = env.list("PINCODES")
+week_range = env.int("WEEK_RANGE")
+available_capacity = env.int("AVAILABILITY", 1)
+slack_api_endpoint = env('SLACK_HOOK_URL')
 
 def find_slots():
     filtered_centers = {}
@@ -20,11 +24,11 @@ def find_slots():
         day = day.strftime('%d-%m-%Y')
 
         for pincode in pincodes:
-            params = {'pincode':pincode, 'date': day}
+            params = {'pincode': pincode, 'date': day}
             centers = call_vaccination_slot_api(params=params)
             filter_centers(centers=centers, filtered_centers=filtered_centers)
-
-    send_notification(filtered_centers=filtered_centers)
+    if filtered_centers:
+      send_notification(filtered_centers=filtered_centers)
 
 
 def filter_centers(centers, filtered_centers):
