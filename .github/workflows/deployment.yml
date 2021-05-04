@@ -14,4 +14,4 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Deploy to instance
-        run: ssh root@139.162.27.131 -o StrictHostKeyChecking=no 'bash -s' < deploy.sh
+        run: ssh root@194.195.117.116 -o StrictHostKeyChecking=no 'bash -s' < deploy.sh
