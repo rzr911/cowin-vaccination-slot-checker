@@ -1,5 +1,5 @@
 cd cowin-vaccination-slot-checker/
-source ~/.bashrc
+echo $HOME;
 pyenv activate cowin
 pip install -r requirements.txt
 pkill -9 -f main_cowin.py
