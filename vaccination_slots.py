@@ -81,12 +81,12 @@ def send_notification(filtered_centers, user):
         for session in filtered_centers[key]["sessions"]:
             message += "\tDate *{}* Available capacity *{}* Vaccine *{}*\n".format(session["date"], session["available_capacity"], session["vaccine"])
 
-    cached_result_length = 0
-    if r.get(user["user_id"]):
-      cached_result_length = int(r.get(user["user_id"]))
+    cache_result = r.get(user["user_id"])
+    if cache_result:
+      cache_result = json.loads(cache_result)
 
-    if not r.get(user["user_id"]) or int(cached_result_length) != len(filtered_centers.keys()):
-      r.setex(user["user_id"], timedelta(hours=cache_expiration), len(filtered_centers.keys()))
+    if not cache_result or cache_result != list(filtered_centers.keys()):
+      r.setex(user["user_id"], timedelta(hours=cache_expiration), json.dumps(list(filtered_centers.keys())))
       send_slack_message(message=message, user_id=user["user_id"])
 
 
