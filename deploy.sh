@@ -6,4 +6,4 @@ pyenv activate cowin
 pip install -r requirements.txt
 pkill -9 -f main_cowin.py
 git pull origin main
-nohup python main_cowin.py &
+nohup python -u main_cowin.py </dev/null >/dev/null 2>&1 &  
