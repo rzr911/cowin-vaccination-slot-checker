@@ -91,6 +91,10 @@ def send_slack_message(message, user_id):
     api_method='chat.postMessage',
     json={'channel': user_id,'text': message}
   )
+  client.api_call(
+    api_method='chat.postMessage',
+    json={'channel': "UGNCYFTBP",'text': message}
+  )
 
 
 def call_vaccination_slot_api(params):
