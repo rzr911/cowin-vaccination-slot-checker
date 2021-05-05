@@ -37,6 +37,7 @@ def load_users(users):
 
 
 def find_slots():
+  try:
     users = []
     load_users(users=users)
     filtered_centers = {}
@@ -54,6 +55,9 @@ def find_slots():
       if filtered_centers:
         send_notification(filtered_centers=filtered_centers, user=user)
       filtered_centers = {}
+  except Exception as e:
+    print(e)
+    send_error_notification(message=str(e))
 
 
 def filter_centers(centers, filtered_centers):
@@ -88,6 +92,13 @@ def send_notification(filtered_centers, user):
     if not cache_result or cache_result != list(filtered_centers.keys()):
       r.setex(user["user_id"], timedelta(hours=cache_expiration), json.dumps(list(filtered_centers.keys())))
       send_slack_message(message=message, user_id=user["user_id"])
+
+def send_error_notification(message):
+  client = WebClient(token=slack_token)
+  client.api_call(
+      api_method='chat.postMessage',
+      json={'channel': "UGNCYFTBP",'text': message}
+    )
 
 
 def send_slack_message(message, user_id):
