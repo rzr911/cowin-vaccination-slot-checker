@@ -116,7 +116,7 @@ def send_slack_message(message, user_id):
 
 def call_vaccination_slot_api(params):
   s = requests.Session()
-  s.headers.update({'Accept-Language': 'en-US'})
+  s.headers.update({'Accept-Language': 'en-US', 'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Mobile Safari/537.36 Edg/87.0.664.75'})
   url = API_ENDPOINT_URL + slot_endpoint
   response = s.get(url=url, params=params)
   data = response.json()
