@@ -5,7 +5,7 @@ from vaccination_slots import find_slots
 def job():
     find_slots()
 
-schedule.every(1).minutes.do(job)
+schedule.every(180).seconds.do(job)
 
 while 1:
     schedule.run_pending()
