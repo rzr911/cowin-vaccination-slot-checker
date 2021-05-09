@@ -1,6 +1,6 @@
 cd cowin-vaccination-slot-checker/
-sudo docker-compose down
-sudo docker-compose up -d
+docker-compose down
+docker-compose up -d
 echo $HOME;export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
