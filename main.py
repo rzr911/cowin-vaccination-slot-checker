@@ -66,7 +66,7 @@ def check_and_set_cache(pincode, centres):
     centres = json.loads(json.dumps(centres))
     if not cache_result or cache_result != centres:
         redis_cli.setex(pincode, timedelta(
-            seconds=cache_expiration), json.dumps(centres))
+            hours=cache_expiration), json.dumps(centres))
         return True
 
     return False
