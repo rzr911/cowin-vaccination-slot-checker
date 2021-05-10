@@ -22,11 +22,11 @@ duration_in_seconds = env.int("DURATION", 300)
 cache_expiration = env.int("CACHE_EXPIRATION", 6)
 slack_token = env('slack_token')
 available_capacity = env.int("AVAILABILITY", 1)
-
+user_file = 'users.csv'
 
 def main():
     try:
-        users = load_users('users.csv')
+        users = load_users(user_file)
         pincode_set = {
             str(pincode) for user in users for pincode in user["pincodes"]}
         today = datetime.today()
@@ -66,19 +66,18 @@ def check_and_set_cache(pincode, centres):
     centres = json.loads(json.dumps(centres))
     if not cache_result or cache_result != centres:
         redis_cli.setex(pincode, timedelta(
-            hours=cache_expiration), json.dumps(centres))
+            seconds=cache_expiration), json.dumps(centres))
         return True
 
     return False
 
 
 
-all_users = load_users('users.csv')
+all_users = load_users(user_file)
 total_pincodes = len({
     str(pincode) for user in all_users for pincode in user["pincodes"]})
 
 seconds = (duration_in_seconds * total_pincodes)/total_api_calls
-
 schedule.every(seconds).seconds.do(main)
 
 
