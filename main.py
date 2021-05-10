@@ -72,7 +72,14 @@ def check_and_set_cache(pincode, centres):
     return False
 
 
-schedule.every(60).seconds.do(main)
+
+all_users = load_users('users.csv')
+total_pincodes = len({
+    str(pincode) for user in all_users for pincode in user["pincodes"]})
+
+seconds = (duration_in_seconds * total_api_calls)/total_api_calls
+
+schedule.every(seconds).seconds.do(main)
 
 
 while 1:
