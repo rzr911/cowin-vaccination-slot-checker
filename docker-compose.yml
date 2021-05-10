@@ -4,6 +4,6 @@ services:
   redis:
     image: redis:5.0
     user: root
-    container_name: emr_redis
+    container_name: redis
     ports:
       - 6379:6379
