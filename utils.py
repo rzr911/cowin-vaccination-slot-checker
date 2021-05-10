@@ -11,7 +11,6 @@ def load_users(file_name):
         for row in csv_reader:
             if line_count != 0:
                 pincodes = row[1].split("-")
-                print(row)
                 users.append({"name": row[0], "pincodes": pincodes, "user_id": row[2],
                               "phone": row[3], "notification_type": NotificationType(row[4])})
             line_count += 1
