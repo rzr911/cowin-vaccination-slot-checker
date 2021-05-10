@@ -6,6 +6,6 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 pyenv activate cowin
 pip install -r requirements.txt
-pkill -9 -f main_cowin.py
+pkill -9 -f main.py
 git pull origin main
-nohup python -u main_cowin.py </dev/null >/dev/null 2>&1 &  
+nohup python -u main.py </dev/null >/dev/null 2>&1 &  
