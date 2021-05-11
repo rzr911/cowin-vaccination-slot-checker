@@ -37,7 +37,7 @@ def main():
         for pincode in pincode_set:
             # load and pass availability value
             updated_centres = find_slots(
-                pincode=pincode, day=today_string, available_capacity=available_capacity, slack_token=slack_token)
+                pincode=pincode, day=today_string, available_capacity=available_capacity)
             if updated_centres:
                 result = check_and_set_cache(
                     pincode=pincode, centres=updated_centres)
@@ -53,7 +53,6 @@ def main():
                 send_notification(filtered_centers=centres, user=user,
                                   slack_token=slack_token, telegram_token=None)
     except Exception as err:
-        raise err
         send_error_notification(message=str(err), slack_token=slack_token)
 
 

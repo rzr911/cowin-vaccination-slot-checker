@@ -5,19 +5,16 @@ API_ENDPOINT_URL = "https://cdn-api.co-vin.in/api"
 slot_endpoint = "/v2/appointment/sessions/public/calendarByPin"
 
 
-def find_slots(pincode, day, available_capacity, slack_token):
-    try:
-        filtered_centers = {}
-        params = {'pincode': pincode, 'date': day}
-        centers = call_vaccination_slot_api(params=params)
-        filter_centers(centers=centers, filtered_centers=filtered_centers,
-                       available_capacity=available_capacity)
-        if filtered_centers:
-            return filtered_centers
-        return None
-    except Exception as e:
-        print(e)
-        send_error_notification(message=str(e), slack_token=slack_token)
+def find_slots(pincode, day, available_capacity):
+
+    filtered_centers = {}
+    params = {'pincode': pincode, 'date': day}
+    centers = call_vaccination_slot_api(params=params)
+    filter_centers(centers=centers, filtered_centers=filtered_centers,
+                   available_capacity=available_capacity)
+    if filtered_centers:
+        return filtered_centers
+    return None
 
 
 def filter_centers(centers, filtered_centers, available_capacity):
