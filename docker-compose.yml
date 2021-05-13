@@ -3,6 +3,7 @@ version: '3'
 services:
   redis:
     image: redis:5.0
+    user: root
     container_name: redis
     volumes:
       - /root/data:/etc
