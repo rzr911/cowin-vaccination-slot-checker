@@ -9,11 +9,11 @@ def send_notification(filtered_centers, user, slack_token, telegram_token):
 
     for i, key in enumerate(filtered_centers.keys()):
         center = filtered_centers[key]
-        message += "\n{} *{}* {}\n".format(i+1,
-                                           center["name"], center["pincode"])
+        message += "\n{} *{}* {} Cost *{}*\n".format(i+1,
+                                           center["name"], center["pincode"], center["fee_type"])
         for session in filtered_centers[key]["sessions"]:
-            message += "\tDate *{}* Available capacity *{}* Vaccine *{}*\n".format(
-                session["date"], session["available_capacity"], session["vaccine"])
+            message += "\tDate *{}* Age Limit=*{}*+ Available capacity Dose1=*{}* Available capacity Dose2=*{}* Vaccine=*{}*\n".format(
+                session["date"], session["min_age_limit"], session["available_capacity_dose1"], session["available_capacity_dose2"], session["vaccine"])
 
     if user["notification_type"] == NotificationType.SLACK:
         send_slack_message(
