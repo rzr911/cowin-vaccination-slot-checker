@@ -40,4 +40,5 @@ def call_vaccination_slot_api(params):
     url = API_ENDPOINT_URL + slot_endpoint
     response = s.get(url=url, params=params)
     data = response.json()
-    return data['centers']
+    if response.status_code == 200:
+        return data['centers']

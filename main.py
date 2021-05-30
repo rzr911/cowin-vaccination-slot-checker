@@ -22,7 +22,8 @@ duration_in_seconds = env.int("DURATION", 300)
 cache_expiration = env.int("CACHE_EXPIRATION", 6)
 slack_token = env('slack_token')
 available_capacity = env.int("AVAILABILITY", 1)
-user_file = 'users.csv'
+user_file = 'test_users.csv'
+
 
 def main():
     try:
@@ -51,7 +52,7 @@ def main():
 
             for user in users:
                 send_notification(filtered_centers=centres, user=user,
-                                  slack_token=slack_token, telegram_token=None)
+                                  slack_token=slack_token, telegram_token=None, available_capacity=available_capacity)
     except Exception as err:
         send_error_notification(message=str(err), slack_token=slack_token)
 
@@ -61,7 +62,7 @@ def check_and_set_cache(pincode, centres):
 
     if cache_result:
         cache_result = json.loads(cache_result)
-    
+
     centres = json.loads(json.dumps(centres))
     if not cache_result or cache_result != centres:
         redis_cli.setex(pincode, timedelta(
@@ -69,7 +70,6 @@ def check_and_set_cache(pincode, centres):
         return True
 
     return False
-
 
 
 all_users = load_users(user_file)

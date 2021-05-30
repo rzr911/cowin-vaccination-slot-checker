@@ -1,5 +1,5 @@
 import csv
-from enums import NotificationType
+from enums import NotificationType, AgeGroup, Dose
 
 
 def load_users(file_name):
@@ -12,6 +12,6 @@ def load_users(file_name):
             if line_count != 0:
                 pincodes = row[1].split("-")
                 users.append({"name": row[0], "pincodes": pincodes, "user_id": row[2],
-                              "phone": row[3], "notification_type": NotificationType(row[4])})
+                              "phone": row[3], "notification_type": NotificationType(row[4]), "age_limit": AgeGroup(row[5]), "dose": Dose(row[6])})
             line_count += 1
     return users

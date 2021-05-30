@@ -1,6 +1,6 @@
 cd cowin-vaccination-slot-checker/
-docker-compose down
-docker-compose up -d
+docker kill redis
+docker run --rm -d --name redis -p 6379:6379 -u 1007 -v /tmp:/etc redis
 echo $HOME;export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
