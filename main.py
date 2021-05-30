@@ -22,7 +22,7 @@ duration_in_seconds = env.int("DURATION", 300)
 cache_expiration = env.int("CACHE_EXPIRATION", 6)
 slack_token = env('slack_token')
 available_capacity = env.int("AVAILABILITY", 1)
-user_file = 'test_users.csv'
+user_file = 'users.csv'
 
 
 def main():
